@@ -139,6 +139,11 @@ def register():
         username = request.form.get("username")
         email = request.form.get("email")
         password = request.form.get("password")
+        confirm_password = request.form.get("confirm_password")
+
+        if confirm_password and password != confirm_password:
+            flash("Passwords do not match", "error")
+            return render_template("register.html")
         
         db = SessionLocal()
         if db.query(User).filter(User.email == email).first() or db.query(User).filter(User.username == username).first():
@@ -158,6 +163,20 @@ def register():
             return redirect(url_for('dashboard'))
         db.close()
     return render_template("register.html")
+
+@app.route('/api/auth/me', methods=['GET'])
+def get_current_user():
+    if current_user.is_authenticated:
+        return jsonify({
+            'authenticated': True,
+            'user': {
+                'id': current_user.id,
+                'name': current_user.full_name or current_user.username,
+                'email': current_user.email,
+                'avatar': current_user.profile_picture or ''
+            }
+        }), 200
+    return jsonify({'authenticated': False, 'user': None}), 200
 
 @app.route('/auth/google')
 def auth_google():

@@ -23,6 +23,20 @@ export default function App() {
     window.addEventListener('hashchange', onHashChange);
     return () => window.removeEventListener('hashchange', onHashChange);
   }, []);
+  const [currentUser, setCurrentUser] = useState(() => window.CURRENT_USER || null);
+  useEffect(() => {
+    if (!currentUser) {
+      fetch('/api/auth/me')
+        .then(r => r.json())
+        .then(data => {
+          if (data && data.authenticated && data.user) {
+            window.CURRENT_USER = data.user;
+            setCurrentUser(data.user);
+          }
+        })
+        .catch(() => {});
+    }
+  }, []);
   const [layers, setLayers] = useState({ states: true, districts: false, basin: false, subbasin: false, watershed: true, micro: false, villages: true, rivers: true, drainage: true, waterBodies: true, wells: false, interventions: true, fieldImages: true, critical: false });
   const [sensitivity, setSensitivity] = useState(72);
   const [range, setRange] = useState('Last 7 Days');
@@ -258,9 +272,9 @@ export default function App() {
   return <a key={item} href={href} className={isActive ? 'active' : ''} onClick={() => { setMenuOpen(false); window.location.hash = href; }}>{item}</a>
 })}
 <div className="mobile-menu-auth">
-  {window.CURRENT_USER ? (
+  {currentUser ? (
     <>
-      <a href="/profile" onClick={() => setMenuOpen(false)}>👤 Profile ({window.CURRENT_USER.name})</a>
+      <a href="/profile" onClick={() => setMenuOpen(false)}>👤 Profile ({currentUser.name})</a>
       <a href="/logout" onClick={() => setMenuOpen(false)} style={{ color: '#ef4444' }}>Log out</a>
     </>
   ) : (
@@ -271,17 +285,17 @@ export default function App() {
   )}
 </div>
 </nav><div className="header-actions">
-          {window.CURRENT_USER ? (
+          {currentUser ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginRight: '15px', fontSize: '13px' }}>
               <a href="/profile" className="nav-interactive" style={{ color: '#102c3b', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '700', fontSize: '15px' }}>
-                {window.CURRENT_USER.avatar ? (
-                  <img src={window.CURRENT_USER.avatar} alt="Profile" style={{ width: '28px', height: '28px', borderRadius: '50%', objectFit: 'cover' }} />
+                {currentUser.avatar ? (
+                  <img src={currentUser.avatar} alt="Profile" style={{ width: '28px', height: '28px', borderRadius: '50%', objectFit: 'cover' }} />
                 ) : (
                   <span style={{ background: '#eef7f2', color: '#168a4c', width: '24px', height: '24px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>
-                    {window.CURRENT_USER.name ? window.CURRENT_USER.name[0].toUpperCase() : 'U'}
+                    {currentUser.name ? currentUser.name[0].toUpperCase() : 'U'}
                   </span>
                 )}
-                <span>{window.CURRENT_USER.name}</span>
+                <span>{currentUser.name}</span>
               </a>
               <a href="/logout" className="logout-power-btn" aria-label="Logout" title="Logout"><Power size={16} strokeWidth={2.5} /><span>Log out</span></a>
             </div>
