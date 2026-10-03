@@ -1,0 +1,55 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+.venv/
+venv/
+env/
+ENV/
+
+# Production builds & caches
+dist/
+frontend/dist/
+build/
+.vite/
+frontend/.vite/
+.cache/
+
+# Python caches
+__pycache__/
+*/__pycache__/
+*/*/__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+
+# Environment and Secrets (CRITICAL: Never commit credentials)
+.env
+backend/.env
+frontend/.env
+*.env
+*.env.local
+
+# Database files (local dev SQLite)
+watersight.db
+backend/watersight.db
+
+# Media uploads and satellite caches
+backend/data/evidence/uploads/
+backend/static/images/
+backend/static/satellite/processed/
+backend/static/satellite/change/
+
+# Logs & temp files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# System & IDE files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
