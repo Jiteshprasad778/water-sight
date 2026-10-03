@@ -395,3 +395,252 @@ main,.site-footer { position:relative; z-index:1; }
 }
 
 .intro-actions .button { min-height: 42px; padding: 0 18px; font-size: 13.5px; border-radius: 8px; }
+
+/* ==========================================================================
+   CROSS-DEVICE RESPONSIVE ENHANCEMENTS (Mobile, Tablet, Desktop)
+   ========================================================================== */
+
+/* 1. Global Viewport & Horizontal Overflow Prevention */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+.app-shell {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* 2. Touch Targets and Tactile Feedback */
+button, a.button, .nav-interactive, select, .auth-btn, .icon-button {
+  touch-action: manipulation;
+}
+button:active, a.button:active, .icon-button:active {
+  transform: translateY(1px);
+}
+
+/* 3. Mobile Navigation Transform Fix (Prevents Menu Cut-off) */
+@media (max-width: 740px) {
+  .main-nav {
+    transform: none !important;
+    left: 14px !important;
+    right: 14px !important;
+    width: auto !important;
+    max-width: calc(100% - 28px) !important;
+  }
+}
+.mobile-menu-auth {
+  display: none;
+}
+@media (max-width: 740px) {
+  .mobile-menu-auth {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--line);
+  }
+  .mobile-menu-auth a {
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 6px;
+    color: var(--blue);
+  }
+  .mobile-menu-auth a:hover {
+    background: #eaf8ef;
+  }
+}
+
+/* 4. Header Auth Buttons on Mobile */
+@media (max-width: 640px) {
+  .header-actions {
+    gap: 6px !important;
+  }
+  .header-auth-group {
+    gap: 8px !important;
+    margin-right: 6px !important;
+  }
+  .auth-btn {
+    font-size: 13px !important;
+    padding: 6px 12px !important;
+    margin: 0 !important;
+  }
+  .logout-power-btn {
+    padding: 5px 10px !important;
+    font-size: 12px !important;
+    margin-left: 4px !important;
+  }
+  .logout-power-btn span {
+    display: none;
+  }
+}
+@media (max-width: 440px) {
+  .header-auth-group {
+    display: none !important;
+  }
+}
+
+/* 5. Watershed Selectors (Administrative Filter) Grid */
+@media (max-width: 960px) {
+  .watershed-selectors {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+}
+@media (max-width: 560px) {
+  .watershed-selectors {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+    padding: 12px !important;
+  }
+  .watershed-selectors select {
+    height: 38px !important;
+    font-size: 13px !important;
+  }
+}
+.watershed-selectors-hint {
+  grid-column: 1 / -1;
+}
+
+/* 6. Overview Action Buttons on Mobile */
+@media (max-width: 600px) {
+  .intro-actions {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    width: 100%;
+  }
+  .intro-actions .button {
+    flex: 1 1 calc(50% - 6px) !important;
+    min-height: 40px !important;
+    padding: 0 12px !important;
+    font-size: 12.5px !important;
+  }
+  .intro-actions .button:first-child {
+    flex: 1 1 100% !important;
+  }
+}
+
+/* 7. Map Stage, Layer Panel & Overlays */
+@media (max-width: 740px) {
+  .layer-panel {
+    max-height: 220px !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    width: 160px !important;
+    font-size: 10.5px !important;
+    padding: 10px !important;
+  }
+  .layer-row {
+    font-size: 10.5px !important;
+    height: 26px !important;
+  }
+  .field-evidence-panel {
+    max-width: calc(100% - 24px) !important;
+    right: 12px !important;
+    left: 12px !important;
+    width: auto !important;
+  }
+  .map-topbar {
+    max-width: calc(100% - 24px) !important;
+    font-size: 9.5px !important;
+    padding: 5px 8px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* 8. Official Project Monitoring Telemetry Strip */
+@media (max-width: 640px) {
+  .trend-panel {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 16px !important;
+    gap: 14px !important;
+  }
+  .trend-activities-wrap {
+    border-left: none !important;
+    padding-left: 0 !important;
+    border-top: 1px solid rgba(255,255,255,0.12) !important;
+    padding-top: 12px !important;
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+}
+
+/* 9. Disaster Alert Cards Responsive Sizing */
+.alert-list {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)) !important;
+}
+@media (max-width: 480px) {
+  .alert-card {
+    border-radius: 8px;
+  }
+  .alert-content {
+    padding: 12px 10px;
+  }
+}
+
+/* 10. Regional Monitoring Cards Collapse */
+@media (max-width: 540px) {
+  .region-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+}
+
+/* 11. Data Status Grid & Source Table */
+.status-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)) !important;
+}
+.source-table-wrap {
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+/* 12. ImageUpload Modal Responsive Layout */
+.upload-modal {
+  max-width: calc(100vw - 28px) !important;
+  max-height: 90vh !important;
+  overflow-y: auto !important;
+  box-sizing: border-box !important;
+}
+.upload-modal-content-wrap {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+@media (max-width: 768px) {
+  .upload-modal {
+    width: 100% !important;
+    padding: 16px !important;
+  }
+  .upload-modal-content-wrap {
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+  .upload-modal-map-col {
+    height: 280px !important;
+    border-left: none !important;
+    padding-left: 0 !important;
+    border-top: 1px solid #e9ecef !important;
+    padding-top: 16px !important;
+  }
+}
+
+/* 13. Satellite Analytics Dashboard Grid */
+.analytics-chart-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)) !important;
+  gap: 20px !important;
+  margin-bottom: 30px;
+}
+@media (max-width: 600px) {
+  .analytics-chart-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+}
+

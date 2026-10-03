@@ -201,7 +201,7 @@ export default function AnalyticsDashboard() {
       </div>
       
       {activeMode === 'water' && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '30px', marginBottom: '30px' }}>
+        <div className="analytics-chart-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '24px', marginBottom: '30px' }}>
           
           <div style={{ background: 'white', padding: '20px', borderRadius: '12px', border: '1px solid #d8e8df' }}>
             <h3 style={{ marginBottom: '15px', color: '#102c3b', fontSize: '16px' }}>1. Water Area Trend</h3>
@@ -252,7 +252,7 @@ export default function AnalyticsDashboard() {
       )}
 
       {activeMode === 'land' && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '30px', marginBottom: '30px' }}>
+        <div className="analytics-chart-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '24px', marginBottom: '30px' }}>
           
           <div style={{ background: 'white', padding: '20px', borderRadius: '12px', border: '1px solid #d8e8df' }}>
             <h3 style={{ marginBottom: '15px', color: '#102c3b', fontSize: '16px' }}>1. LULC Composition (Real Veg Classes)</h3>
@@ -287,7 +287,7 @@ export default function AnalyticsDashboard() {
         </div>
       )}
 
-      <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', marginBottom: '30px' }}>
+      <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', marginBottom: '30px', flexWrap: 'wrap' }}>
         <button style={btnStyle(activeMode === 'land')} onClick={() => setActiveMode('land')}>🌱 Land Analysis (NDVI / LULC)</button>
         <button style={btnStyle(activeMode === 'water')} onClick={() => setActiveMode('water')}>💧 Water Analysis (NDWI)</button>
       </div>

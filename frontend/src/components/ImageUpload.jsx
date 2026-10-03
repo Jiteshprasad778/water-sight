@@ -167,7 +167,7 @@ export default function ImageUpload({ onUpload, onCancel }) {
           <button className="icon-button" type="button" onClick={onCancel}><X size={18} /></button>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
+        <div className="upload-modal-content-wrap" style={{ display: 'flex', gap: '20px' }}>
           <div style={{ flex: 1 }}>
             {!file ? (
               <div
@@ -244,7 +244,7 @@ export default function ImageUpload({ onUpload, onCancel }) {
           </div>
           
           {needsManualLocation && (
-            <div style={{ flex: 1, height: '450px', borderLeft: '1px solid #e9ecef', paddingLeft: '20px', display: 'flex', flexDirection: 'column' }}>
+            <div className="upload-modal-map-col" style={{ flex: 1, height: '450px', borderLeft: '1px solid #e9ecef', paddingLeft: '20px', display: 'flex', flexDirection: 'column' }}>
               <h4 style={{ margin: '0 0 10px 0', fontSize: '14px', color: '#2b3643', display: 'flex', alignItems: 'center', gap: '5px' }}>
                 <MapPin size={16} /> Select Location on Map
               </h4>

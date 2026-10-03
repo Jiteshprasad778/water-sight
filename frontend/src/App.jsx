@@ -1,4 +1,4 @@
-﻿import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import {
   Activity, AlertTriangle, BellRing, CalendarDays, Download, Droplets, Expand, Gauge, Globe2, Layers3, MapPin,
   Menu, MoreHorizontal, Navigation, RefreshCw, Satellite, Search, ShieldCheck, X, Camera, Power
@@ -256,7 +256,21 @@ export default function App() {
   const href = `#${item.toLowerCase().replace(' ', '-')}`;
   const isActive = activeHash === href;
   return <a key={item} href={href} className={isActive ? 'active' : ''} onClick={() => { setMenuOpen(false); window.location.hash = href; }}>{item}</a>
-})}</nav><div className="header-actions">
+})}
+<div className="mobile-menu-auth">
+  {window.CURRENT_USER ? (
+    <>
+      <a href="/profile" onClick={() => setMenuOpen(false)}>👤 Profile ({window.CURRENT_USER.name})</a>
+      <a href="/logout" onClick={() => setMenuOpen(false)} style={{ color: '#ef4444' }}>Log out</a>
+    </>
+  ) : (
+    <>
+      <a href="/login" onClick={() => setMenuOpen(false)}>Officer Login</a>
+      <a href="/register" onClick={() => setMenuOpen(false)}>Register Account</a>
+    </>
+  )}
+</div>
+</nav><div className="header-actions">
           {window.CURRENT_USER ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginRight: '15px', fontSize: '13px' }}>
               <a href="/profile" className="nav-interactive" style={{ color: '#102c3b', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '700', fontSize: '15px' }}>
@@ -272,7 +286,7 @@ export default function App() {
               <a href="/logout" className="logout-power-btn" aria-label="Logout" title="Logout"><Power size={16} strokeWidth={2.5} /><span>Log out</span></a>
             </div>
           ) : (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginRight: '15px', fontSize: '13px' }}>
+            <div className="header-auth-group" style={{ display: 'flex', alignItems: 'center', gap: '15px', marginRight: '15px', fontSize: '13px' }}>
               <a href="/login" className="nav-interactive auth-btn auth-btn-primary" style={{ textDecoration: 'none' }}>Login</a>
               <a href="/register" className="nav-interactive auth-btn auth-btn-accent" style={{ textDecoration: 'none' }}>Register</a>
             </div>
@@ -302,7 +316,7 @@ export default function App() {
           </span>
         )}
         </label>
-        <div style={{ fontSize: '12px', color: '#687d72', marginTop: '10px' }}>
+        <div className="watershed-selectors-hint" style={{ fontSize: '12px', color: '#687d72', marginTop: '10px' }}>
           <strong>Hydrological Watershed:</strong> Click on a watershed polygon directly on the map to view its details.
         </div>
       </div><div className="map-stage india-map-stage"><IndiaWatershedMap layers={layers} stateId={selectedState} districtId={selectedDistrict} projectId={selectedProject} resetView={mapReset} onFieldEvidence={setFieldEvidence} /><div className="map-topbar"><span><Globe2 size={14} /> India · OpenStreetMap base layer</span><span><Satellite size={14} /> GIS data</span></div><div className="layer-panel india-layer-panel"><div className="panel-label"><Layers3 size={15} /> GIS layers</div>{[['states', 'State boundaries'], ['districts', 'District boundaries'], ['basin', 'Basin (Bhuvan)'], ['subbasin', 'Subbasin (Bhuvan)'], ['watershed', 'Watershed (Bhuvan)'], ['micro', 'Micro-watershed (Bhuvan)'], ['villages', 'Villages'], ['rivers', 'Rivers / streams'], ['drainage', 'Drainage'], ['waterBodies', 'Water bodies'], ['wells', 'Wells'], ['interventions', 'Interventions'], ['fieldImages', 'Geo-coded images'], ['critical', 'Critical zones']].map(([key, label]) => <button key={key} className="layer-row" type="button" onClick={() => setLayers((current) => ({ ...current, [key]: !current[key] }))} role="switch" aria-checked={layers[key]}><span>{label}</span><i className={layers[key] ? 'toggle active' : 'toggle'}><b /></i></button>)}</div>{fieldEvidence && <aside className="field-evidence-panel"><button type="button" onClick={() => setFieldEvidence(null)} aria-label="Close field evidence"><X size={14} /></button><span>FIELD EVIDENCE</span><strong>{fieldEvidence.properties.category}</strong><p>{fieldEvidence.properties.description}</p><small>Image preview unavailable · {fieldEvidence.properties.date} · {fieldEvidence.geometry.coordinates[1].toFixed(5)}, {fieldEvidence.geometry.coordinates[0].toFixed(5)}</small></aside>}<div className="india-map-legend"><span><i className="legend-watershed" /> Watershed</span><span><i className="legend-water" /> Water body</span><span><i className="legend-intervention" /> Intervention</span><span><i className="legend-evidence" /> Field evidence</span></div></div><div className="map-summary"><div><span>Selected</span><strong>{selectedName}</strong><small><MapPin size={13} /> {selectedAlert.location}</small></div><div><span>Area</span><strong className="blue-text">{selectedProject ? '48.6 km²' : 'Select one'}</strong><small>geometry</small></div><div><span>Interventions</span><strong>{selectedProject ? '18' : '—'}</strong><small>records</small></div><div><span>Field evidence</span><strong>{evidenceStats ? evidenceStats.geocoded : '—'}</strong><small>geo-coded (of {evidenceStats ? evidenceStats.total : 0} total)</small></div></div>
@@ -332,7 +346,7 @@ export default function App() {
                     <span style={{ marginTop: '5px', fontSize: '12px' }}>official implementation<br />records geotagged</span>
                   </div>
                   
-                  <div style={{ flex: '2', minWidth: '300px', display: 'flex', gap: '15px', flexWrap: 'wrap', borderLeft: '1px solid rgba(255,255,255,0.1)', paddingLeft: '20px' }}>
+                  <div className="trend-activities-wrap" style={{ flex: '2', minWidth: '260px', display: 'flex', gap: '15px', flexWrap: 'wrap', borderLeft: '1px solid rgba(255,255,255,0.1)', paddingLeft: '20px' }}>
                     {monitoringSummary.activities.slice(0,4).map((act, i) => (
                       <div key={i} style={{ display: 'flex', flexDirection: 'column', padding: '5px 10px', background: 'rgba(255,255,255,0.05)', borderRadius: '6px', fontSize: '13px' }}>
                         <span style={{ color: '#88a696', fontWeight: '500', textTransform: 'capitalize', fontSize: '11px' }}>{act.name}</span>
@@ -365,7 +379,7 @@ export default function App() {
                 </div>
               )}
 
-              <div className="alert-list" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: "20px" }}>
+              <div className="alert-list" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 300px), 1fr))", gap: "20px" }}>
                 {monitoringLoading ? (
                   <div style={{ padding: '40px', textAlign: 'center', color: '#6b7c73' }}>Loading official alerts...</div>
                 ) : monitoringError ? (
